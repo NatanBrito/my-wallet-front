@@ -8,7 +8,7 @@ import TelaGastos from './components/TelaGastos';
 import EntradaSaida from './components/EntradaSaida';
 function App() {
   return (
-    <div classname=" App">
+    <div className=" App">
       <BrowserRouter>
       <Routes>
       <Route path="/" element={<TelaLogin />}/>
