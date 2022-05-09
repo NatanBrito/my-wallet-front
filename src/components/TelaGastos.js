@@ -1,8 +1,8 @@
 import  styledComponents  from "styled-components";
 import logout from "./../assets/images/logout.png";
 import xx from "./../assets/images/xx.png";
-import yy from "./../assets/images/yy.png"
-
+import yy from "./../assets/images/yy.png";
+import { useState, useEffect, useContext } from "react";
 export default function TelaGastos(){
   
     return(

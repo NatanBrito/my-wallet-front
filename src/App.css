@@ -39,3 +39,7 @@ background-color: #8C11BE;
   background: #560c76;
 
 }
+::-webkit-scrollbar{
+  height: 0px;
+  width: 0px;
+}

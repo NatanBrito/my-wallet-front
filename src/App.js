@@ -6,10 +6,11 @@ import TelaLogin from './components/TelaLogin';
 import TelaCadastro from './components/TelaCadastro';
 import TelaGastos from './components/TelaGastos';
 import EntradaSaida from './components/EntradaSaida';
+import TokenProvider from './context/Token'
 function App() {
   return (
     <div className=" App">
-      <BrowserRouter>
+      <TokenProvider>      <BrowserRouter>
       <Routes>
       <Route path="/" element={<TelaLogin />}/>
       <Route path="/sign-up" element={<TelaCadastro />} />
@@ -17,6 +18,7 @@ function App() {
       <Route path="/entradasaida" element={<EntradaSaida />}/>
       </Routes>
       </BrowserRouter>
+      </TokenProvider>
     </div>
   );
 }

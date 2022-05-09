@@ -8,7 +8,7 @@ export default function TelaCadastro(){
 const [valueInputs,setValueInputs]=useState({inputEmail:"",inputSenha:"",inputNome:"",inputReSenha:""})
 async function sendForms(e){
     e.preventDefault();
-const postSignup="localhost:5000/sign-up";
+const postSignup="http://localhost:5000/sign-up";
 const objPost={
     name:valueInputs.inputNome,
     email:valueInputs.inputEmail,
@@ -17,11 +17,11 @@ const objPost={
 };
 const promise= axios.post(postSignup,objPost)
 promise.then((response)=>{
-    console.log(response.data)
+    alert("cadastro realizado com sucesso")
     Navigate("/")
 })
 promise.catch((e)=>{
-    alert("erro")
+    alert("erro, valide as informações e tente novamente")
 })
 }
     return(

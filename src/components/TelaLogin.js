@@ -1,26 +1,31 @@
 import styledComponents from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { TokenContext } from "../context/Token";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./../assets/images/MyWallet.png";
 export default function TelaLogin(){
+const {Token,setToken}= useContext(TokenContext)
 const Navigate = useNavigate();
 const [valueInputs,setValueInputs]=useState({inputEmail:"",inputSenha:""})
-async function sendForms(e){
+function sendForms(e){
     e.preventDefault();
-const postSignIn="localhost:5000/sign-in";
+const postSignIn="http://localhost:5000/sign-in";
 const objPost={
     email:valueInputs.inputEmail,
     password:valueInputs.inputSenha
 }
-try{// testando com try/catch
-   await axios.post(postSignIn,objPost)//dando erro nessa bosta
-    Navigate("/outlay")
-   }catch(e){
-       alert("erro")
+// testando com try/catch
+    const promise= axios.post(postSignIn,objPost)//dando erro nessa bosta
+    promise.then((res)=>{
+        const {token,user}=res.data
+        setToken(token)
+        Navigate("/outlay")})
+    promise.catch((e)=>{
+       alert(e.message)
        console.log(e)
-    //    setValueInputs({inputEmail:"",inputSenha:""})
-   }
+       setValueInputs({inputEmail:"",inputSenha:""})
+   })
 }
     return(
         <div className="App">
