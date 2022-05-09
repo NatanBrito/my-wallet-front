@@ -17,8 +17,7 @@ const objPost={
     email:valueInputs.inputEmail,
     password:valueInputs.inputSenha
 }
-// testando com try/catch
-    const promise= axios.post(postSignIn,objPost)//dando erro nessa bosta
+    const promise= axios.post(postSignIn,objPost)
     promise.then((res)=>{
         const {token,user}=res.data
         setToken(token)
@@ -26,7 +25,6 @@ const objPost={
         Navigate("/outlay")})
     promise.catch((e)=>{
        alert(e.message)
-       console.log(e)
        setValueInputs({inputEmail:"",inputSenha:""})
    })
 }

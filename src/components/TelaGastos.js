@@ -24,12 +24,10 @@ export default function TelaGastos(){
       const promise= axios.get(GETURL,config)
       promise.then((res)=>{
       setMessages(res.data)
-      console.log("deu bom",messages)
       })
       promise.catch((e)=>{
           alert(e.message)
-          console.log(Token)
-          console.log(e.message)
+
       })
     },[]);
    
@@ -53,7 +51,6 @@ export default function TelaGastos(){
                }else{
                 buy+=msg.value;
                }
-               console.log(earns)
                return( <MessagesUser key={msg.time+index} 
                 time={msg.time} describe={msg.describe}
                 type={msg.type} value={msg.value} />
@@ -208,7 +205,6 @@ width:375px;
 .entrada{
     color:green;
 }
-// projeto13-mywallet-front
 .saida{
     color:red;
 }
