@@ -2,9 +2,8 @@ import axios from "axios";
 import styledComponents  from "styled-components";
 import { useState, useContext } from "react";
 import { TokenContext } from "../context/Token";
-import {  useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 export default function Saida(){
-    
     const {Token}=useContext(TokenContext);
     const Navigate = useNavigate();
     const [valueInputs,setValueInputs]=useState({inputDescricao:"",inputValor:""});
@@ -14,7 +13,7 @@ export default function Saida(){
     const objPost={
         value:valueInputs.inputValor,
         describe:valueInputs.inputDescricao,
-        type:"entrada"
+        type:"saida"
     } 
     const config = {
         headers: {
@@ -34,7 +33,7 @@ export default function Saida(){
     return(
         <All>
         <header>
-                <span>Nova Entrada</span>
+                <span>Nova Saida</span>
         </header>
         <form onSubmit={sendForms}>
         <input 

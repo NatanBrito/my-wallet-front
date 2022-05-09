@@ -39,6 +39,11 @@ background-color: #8C11BE;
   background: #560c76;
 
 }
+.buttonAdicionar:hover{
+    transition: 0.5s;
+    background: #560c76;
+  
+}
 ::-webkit-scrollbar{
   height: 0px;
   width: 0px;

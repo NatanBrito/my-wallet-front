@@ -8,6 +8,7 @@ import TelaGastos from './components/TelaGastos';
 import EntradaSaida from './components/EntradaSaida';
 import TokenProvider from './context/Token';
 import UserProvider from './context/User';
+import Saida from './components/Saida';
 function App() {
   return (
     <div className=" App">
@@ -19,6 +20,7 @@ function App() {
               <Route path="/sign-up" element={<TelaCadastro />} />
               <Route path="/outlay" element={<TelaGastos />}/>
               <Route path="/entradasaida" element={<EntradaSaida />}/>
+              <Route path="/saida" element={<Saida />}/>
             </Routes>
           </BrowserRouter>
         </TokenProvider>

@@ -1,5 +1,6 @@
 import  styledComponents  from "styled-components";
 import logout from "./../assets/images/logout.png";
+import { Link, useNavigate } from "react-router-dom";
 import xx from "./../assets/images/xx.png";
 import yy from "./../assets/images/yy.png";
 import { useState, useEffect, useContext } from "react";
@@ -7,9 +8,11 @@ import axios from "axios";
 import { UserContext } from "../context/User";
 import { TokenContext } from "../context/Token";
 export default function TelaGastos(){
-    let earns;
-    const {User}=useContext(UserContext);
-    const {Token}=useContext(TokenContext);
+    const Navigate = useNavigate();
+    let earns=0;
+    let buy=0;
+    const {User,setUser}=useContext(UserContext);
+    const {Token,setToken}=useContext(TokenContext);
     const [messages,setMessages]=useState([]) 
     const GETURL="http://localhost:5000/messages";
     const config = {
@@ -29,38 +32,50 @@ export default function TelaGastos(){
           console.log(e.message)
       })
     },[]);
+   
     return(
         <Centro>
         <All>
             <header>
                 <>
                 <span>olá, {User}</span>
-                <img src={logout} alt="sair"/>
+                <img onClick={()=>{
+                 setToken(null)
+                 setUser(null)
+                 Navigate("/")
+                }} src={logout} alt="sair"/>
                 </>
             </header>
             <WhiteBoad>
            {messages.map((msg,index)=>{
-                earns+=msg.value;
-              return <MessagesUser key={msg.time+index} 
-              time={msg.time} describe={msg.describe}
-               type={msg.type} value={msg.value} />
-           })}
+               if(msg.type==="entrada"){
+                   earns+=msg.value;
+               }else{
+                buy+=msg.value;
+               }
+               console.log(earns)
+               return( <MessagesUser key={msg.time+index} 
+                time={msg.time} describe={msg.describe}
+                type={msg.type} value={msg.value} />
+              
+              )
+            })}
             <MessagesUser />
             <Saldo>
             <span>Saldo</span>
             </Saldo>
             <ValorSaldo>
-             <span>151515</span>
+             <span className={earns-buy>0?"entrada":"saida"}>{earns ===0?(earns-buy):(earns-buy)}</span>
             </ValorSaldo>
             </WhiteBoad>
             <Buttons>
-            <button className="afasta">
+            <button onClick={()=>{Navigate("/entradasaida")}} className="afasta buttonAdicionar">
                 <img className="img" src={xx} alt="mais"/>
                 <span>Nova Entrada</span>
             </button>
-            <button>
+            <button onClick={()=>{Navigate("/saida")}} className="buttonAdicionar">
             <img className="img" src={xx} alt="mais"/>
-            <span>Nova <p>Saida</p></span>
+            <span>Nova Saida</span>
             </button>
             </Buttons>
         </All>
@@ -80,7 +95,6 @@ function MessagesUser({time,describe,type,value}){
             </Message>
    )
 }
-// sumir com os scrolls
 const ValorSaldo=styledComponents.div`
 display:flex;
 margin-top:20px;
@@ -123,12 +137,13 @@ const Esquerda=styledComponents.div`
     font-style: normal;
     font-weight: 400;
     font-size: 17px;
+    color:gray;
 }
 .describe{
     
 font-family: 'Raleway';
 font-style: normal;
-font-weight: 400;
+font-weight: 700;
 font-size: 16px;
 }
 `
@@ -166,6 +181,9 @@ button{
             
         }
 }
+:hover{
+    color:black;
+}
 `
 const WhiteBoad=styledComponents.div`
 width:326px;
@@ -187,6 +205,13 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 width:375px;
+.entrada{
+    color:green;
+}
+// projeto13-mywallet-front
+.saida{
+    color:red;
+}
     header{
         margin-top:30px;
         width:326px;
@@ -199,8 +224,9 @@ width:375px;
                 font-size: 26px;
                 color:white;
             }
-            img{
-            
+            img:hover{
+                transition: 1s;
+                width:20px;            
             }
     }
 `
