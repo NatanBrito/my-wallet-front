@@ -1,11 +1,13 @@
 import styledComponents from "styled-components";
 import { useState, useContext } from "react";
 import { TokenContext } from "../context/Token";
+import { UserContext } from "../context/User";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./../assets/images/MyWallet.png";
 export default function TelaLogin(){
-const {Token,setToken}= useContext(TokenContext)
+const {setUser}=useContext(UserContext)
+const {setToken}= useContext(TokenContext)
 const Navigate = useNavigate();
 const [valueInputs,setValueInputs]=useState({inputEmail:"",inputSenha:""})
 function sendForms(e){
@@ -20,6 +22,7 @@ const objPost={
     promise.then((res)=>{
         const {token,user}=res.data
         setToken(token)
+        setUser(user)
         Navigate("/outlay")})
     promise.catch((e)=>{
        alert(e.message)

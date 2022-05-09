@@ -3,72 +3,49 @@ import logout from "./../assets/images/logout.png";
 import xx from "./../assets/images/xx.png";
 import yy from "./../assets/images/yy.png";
 import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { UserContext } from "../context/User";
+import { TokenContext } from "../context/Token";
 export default function TelaGastos(){
-  
+    let earns;
+    const {User}=useContext(UserContext);
+    const {Token}=useContext(TokenContext);
+    const [messages,setMessages]=useState([]) 
+    const GETURL="http://localhost:5000/messages";
+    const config = {
+      headers: {
+        Authorization: `bearer ${Token}`,
+      },
+    };
+    useEffect(()=>{
+      const promise= axios.get(GETURL,config)
+      promise.then((res)=>{
+      setMessages(res.data)
+      console.log("deu bom",messages)
+      })
+      promise.catch((e)=>{
+          alert(e.message)
+          console.log(Token)
+          console.log(e.message)
+      })
+    },[]);
     return(
         <Centro>
         <All>
             <header>
                 <>
-                <span>olá,Fulano</span>
+                <span>olá, {User}</span>
                 <img src={logout} alt="sair"/>
                 </>
             </header>
             <WhiteBoad>
-            <Message>
-            <Esquerda>
-             <span className="horario">12:51</span>
-             <span className="describe"> traasasasalalau</span>
-            </Esquerda>
-            <Direita>
-              <span className="saida ">15500</span>
-            </Direita>
-            </Message>
-            <Message>
-            <Esquerda>
-             <span className="horario">12:01</span>
-             <span className="describe"> tralalau</span>
-            </Esquerda>
-            <Direita>
-              <span className="entrada">500</span>
-            </Direita>
-            </Message>
-            <Message>
-            <Esquerda>
-             <span className="horario">12:51</span>
-             <span className="describe"> traasasasalalau</span>
-            </Esquerda>
-            <Direita>
-              <span className="saida ">15500</span>
-            </Direita>
-            </Message>
-            <Message>
-            <Esquerda>
-             <span className="horario">12:01</span>
-             <span className="describe"> tralalau</span>
-            </Esquerda>
-            <Direita>
-              <span className="entrada">500</span>
-            </Direita>
-            </Message>
-            <Message>
-            <Esquerda>
-             <span className="horario">12:51</span>
-             <span className="describe"> traasasasalalau</span>
-            </Esquerda>
-            <Direita>
-              <span className="saida ">15500</span>
-            </Direita>
-            </Message>
-            <Message>
-            <Esquerda>
-             <span className="horario">12:01</span>
-             <span className="describe"> tralalau</span>
-            </Esquerda>
-            <Direita>
-              <span className="entrada">500</span>
-            </Direita>
-            </Message>
+           {messages.map((msg,index)=>{
+                earns+=msg.value;
+              return <MessagesUser key={msg.time+index} 
+              time={msg.time} describe={msg.describe}
+               type={msg.type} value={msg.value} />
+           })}
+            <MessagesUser />
             <Saldo>
             <span>Saldo</span>
             </Saldo>
@@ -89,6 +66,19 @@ export default function TelaGastos(){
         </All>
         </Centro>   
     )
+}
+function MessagesUser({time,describe,type,value}){
+   return(
+   <Message>
+            <Esquerda>
+             <span className="horario">{time}                      </span>
+             <span className="describe">    {describe}</span>
+            </Esquerda>
+            <Direita>
+              <span className={type==="saida"?"saida":"entrada"}>{value}</span>
+            </Direita>
+            </Message>
+   )
 }
 // sumir com os scrolls
 const ValorSaldo=styledComponents.div`
